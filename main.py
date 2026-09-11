@@ -47,17 +47,38 @@ edu = EduManagement()
 # print(f.read())
 
 #异常
-file = None
-try:
-    file = open('lesson01.txt', 'r', encoding='utf-8')
-    print(file.read())
-except FileNotFoundError:
-    print("无法打开指定文件!")
-except LookupError:
-    print("指定了位置编码")
-except UnicodeDecodeError:
-    print("读取文件是解码错误")
-finally:
-    if file:
-        file.close()
+# file = None
+# try:
+#     #file = open('lesson01.txt', 'r', encoding='utf-8')
+#     file = open('使用说明.txt', 'r')
+#     print(file.read())
+# except FileNotFoundError:
+#     print("无法打开指定文件!")
+# except LookupError:
+#     print("指定了未知编码")
+# except UnicodeDecodeError:
+#     print("读取文件是解码错误")
+# #finally --->释放资源
+# finally:
+#     if file:
+#         file.close()
+class InputError(ValueError):
+    """自定义异常类型"""
+    pass
 
+def fac(num):
+    '''求阶乘'''
+    if num < 0:
+        raise InputError("只能计算非负整数的阶乘")
+    if num in (0, 1):
+        return 1
+    return num * fac(num - 1)
+
+flag = True
+while flag:
+    num = int(input("n = "))
+    try:
+        print(f"{num}!={fac(num)}")
+        flag = False
+    except InputError as e:
+        print(e)
