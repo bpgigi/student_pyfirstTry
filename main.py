@@ -62,23 +62,27 @@ edu = EduManagement()
 # finally:
 #     if file:
 #         file.close()
-class InputError(ValueError):
-    """自定义异常类型"""
-    pass
+# class InputError(ValueError):
+#     """自定义异常类型"""
+#     pass
+#
+# def fac(num):
+#     '''求阶乘'''
+#     if num < 0:
+#         raise InputError("只能计算非负整数的阶乘")
+#     if num in (0, 1):
+#         return 1
+#     return num * fac(num - 1)
+#
+# flag = True
+# while flag:
+#     num = int(input("n = "))
+#     try:
+#         print(f"{num}!={fac(num)}")
+#         flag = False
+#     except InputError as e:
+#         print(e)\
 
-def fac(num):
-    '''求阶乘'''
-    if num < 0:
-        raise InputError("只能计算非负整数的阶乘")
-    if num in (0, 1):
-        return 1
-    return num * fac(num - 1)
-
-flag = True
-while flag:
-    num = int(input("n = "))
-    try:
-        print(f"{num}!={fac(num)}")
-        flag = False
-    except InputError as e:
-        print(e)
+#with自动执行close
+# with open("使用说明.txt", "r", encoding="utf-8") as f:
+#     print(f.read())
