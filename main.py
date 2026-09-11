@@ -86,3 +86,23 @@ edu = EduManagement()
 #with自动执行close
 # with open("使用说明.txt", "r", encoding="utf-8") as f:
 #     print(f.read())
+
+# import json
+# # my_dict = {
+# #     "name": "李英俊",
+# #     "age": 21,
+# #     "friends": ["dxy","yy","wxs"],
+# #     "education": ["DUT"],
+# #     "cars":[
+# #         {"brand" : "BMW","max_speed" : 240},
+# #         {"brand" : "XIAOMI","max_speed" : 200},
+# #         {"brand" : "MASHA","max_speed" : 280}
+# #     ]
+# # }
+# # print(json.dumps(my_dict))--->读取
+# # with open('data.json', 'w') as f:
+# #     json.dump(my_dict, f)
+# with open('data.json', 'r') as outfile:
+#     my_dic = json.load(outfile)
+#     print(my_dic)
+#     print(type(my_dic))
