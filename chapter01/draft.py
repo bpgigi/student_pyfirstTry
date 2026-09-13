@@ -125,9 +125,28 @@ class EduManagement:
             "count": 1,
             "language": "zh"
         }
-        geo_response = requests.get(geo_url, params=params)
-        geo_data = geo_response.json()
+        try:
+            geo_response = requests.get( geo_url, params=params,timeout=5)
+            geo_response.raise_for_status()
+        except requests.exceptions.ReadTimeout as e:
+            print("超时",e)
+            return
+        except requests.exceptions.HTTPError:
+            print("服务器返回错误")
+            return
+        except requests.exceptions.RequestException:
+            print("网络请求失败")
+            return
+        try:
+            geo_data = geo_response.json()
+        except json.decoder.JSONDecodeError as e:
+            print("服务器返回的数据不是合法 JSON",e)
+            return
         #print(geo_data)
+        if "results" not in geo_data:
+            print("城市不存在")
+            return
+
         city = geo_data["results"][0]  # --->全部信息，不只是city这个
         #print(json.dumps(city, ensure_ascii=False, indent=4))
         # print(f"城市：{city['name']}")
@@ -157,7 +176,4 @@ class EduManagement:
 
 # if __name__ == "__main__":
     # edu =EduManagement()
-    # edu.show()
-    # edu.add_student()
-    # edu.update()
-    # print(os.getcwd())
+
