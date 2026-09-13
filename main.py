@@ -23,6 +23,8 @@ while True:
             edu.search_student()
         case 5:
             edu.show_all_student()
-        case 6:
+        case 7:
             break
+        case 6:
+            edu.check_weather()
 #怎么链接两个

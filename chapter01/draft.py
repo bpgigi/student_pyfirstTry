@@ -1,5 +1,5 @@
 import json
-
+import requests
 class Student:
     def __init__(self, name,chinese,math,english):
         self.name = name
@@ -62,7 +62,8 @@ class EduManagement:
         print("3.删除学生成绩")
         print("4.查询学生成绩")
         print("5.展示全部学生成绩")
-        print("6.退出系统")
+        print("6.查询天气")
+        print("7.退出系统")
         print("-" * 20)
     def add_student(self):
         n = input("请输入要添加的学生姓名")
@@ -101,8 +102,7 @@ class EduManagement:
             if s.name == name:
                 self.stu_list.remove(s)
                 #print(f"删除后学生列表：{self.stu_list}")
-                with open("stu_data.json","w",encoding="utf-8") as f:
-                    json.dump(self.stu_list,f,ensure_ascii=False,indent=4)
+                self.save_data()
                 return
         print("删除失败，未找到该学生")
     def search_student(self):
@@ -115,6 +115,45 @@ class EduManagement:
     def show_all_student(self):
         for s in self.stu_list:
             print(s)
+    def check_weather(self):
+        import json
+
+        geo_url = "https://geocoding-api.open-meteo.com/v1/search"
+        city_name = input("请输入要查询的城市名字")
+        params = {
+            "name": city_name,
+            "count": 1,
+            "language": "zh"
+        }
+        geo_response = requests.get(geo_url, params=params)
+        geo_data = geo_response.json()
+        #print(geo_data)
+        city = geo_data["results"][0]  # --->全部信息，不只是city这个
+        #print(json.dumps(city, ensure_ascii=False, indent=4))
+        # print(f"城市：{city['name']}")
+        # print(city["id"])
+        # print(city["latitude"])
+        # print(city["longitude"])
+        latitude = city["latitude"]
+        longitude = city["longitude"]
+        print("维度：", latitude)
+        print("经度", longitude)
+
+        #第二次api，查天气
+        weather_url = "https://api.open-meteo.com/v1/forecast"
+        weather_params = {
+            "latitude": latitude,
+            "longitude": longitude,
+            "current": "temperature_2m"
+        }
+        weather_response = requests.get( weather_url, params=weather_params)
+        weather_data = weather_response.json()
+        # print(weather_data)
+        # print(type(weather_data))
+        # print(json.dumps(weather_data, ensure_ascii=False, indent=4))
+        temperature = weather_data["current"]["temperature_2m"]
+        # print(weather_data["temperature_2m"])
+        print(f"{city_name}当前温度：{temperature}°C")
 
 # if __name__ == "__main__":
     # edu =EduManagement()
