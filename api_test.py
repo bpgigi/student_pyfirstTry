@@ -1,38 +1,38 @@
 import json
 import requests
-geo_url = "https://geocoding-api.open-meteo.com/v1/search"
-city_name = input("请输入要查询的城市名字")
-params = {
-    "name":city_name,
-    "count":1,
-    "language":"zh"
-}
-try:
-    geo_response = requests.get( geo_url, params=params,timeout=5)
-    geo_response.raise_for_status()
-except requests.exceptions.ReadTimeout:
-    print("超时")
-    exit()
-finally:
-    # geo_response.raise_for_status()
-    pass
-print(geo_response.status_code)
-geo_data = geo_response.json() #---->字典
-#print(type(geo_data))
-print(geo_data)
-if "results" not in geo_data:
-    print("未找到该城市")
-    exit()
-city = geo_data["results"][0]#--->全部信息，不只是city这个
-#print(json.dumps(city, ensure_ascii=False, indent=4))
-print(f"城市：{city['name']}")
-# print(city["id"])
-# print(city["latitude"])
-# print(city["longitude"])
-latitude = city["latitude"]
-longitude = city["longitude"]
-print("维度：",latitude)
-print("经度",longitude)
+# geo_url = "https://geocoding-api.open-meteo.com/v1/search"
+# city_name = input("请输入要查询的城市名字")
+# params = {
+#     "name":city_name,
+#     "count":1,
+#     "language":"zh"
+# }
+# try:
+#     geo_response = requests.get( geo_url, params=params,timeout=5)
+#     geo_response.raise_for_status()
+# except requests.exceptions.ReadTimeout:
+#     print("超时")
+#     exit()
+# finally:
+#     # geo_response.raise_for_status()
+#     pass
+# print(geo_response.status_code)
+# geo_data = geo_response.json() #---->字典
+# #print(type(geo_data))
+# print(geo_data)
+# if "results" not in geo_data:
+#     print("未找到该城市")
+#     exit()
+# city = geo_data["results"][0]#--->全部信息，不只是city这个
+# #print(json.dumps(city, ensure_ascii=False, indent=4))
+# print(f"城市：{city['name']}")
+# # print(city["id"])
+# # print(city["latitude"])
+# # print(city["longitude"])
+# latitude = city["latitude"]
+# longitude = city["longitude"]
+# print("维度：",latitude)
+# print("经度",longitude)
 
 #第二次api，查天气
 # weather_url = "https://api.open-meteo.com/v1/forecast"
@@ -49,3 +49,27 @@ print("经度",longitude)
 # temperature = weather_data["current"]["temperature_2m"]
 # # print(weather_data["temperature_2m"])
 # print(temperature)
+
+url = "https://jsonplaceholder.typicode.com/posts"
+
+student = {
+    "name": "张三",
+    "chinese": 90,
+    "math": 95,
+    "english": 88
+}
+
+try:
+    response = requests.post(url, json=student,timeout=5)
+    response.raise_for_status()
+    print(response.status_code)
+    data = response.json()
+    print("添加成功")
+    print(data)
+
+except requests.exceptions.Timeout as e:
+    print('上传超时',e)
+    exit()
+except requests.exceptions.RequestException as e:
+    print("请求失败",e)
+    exit()

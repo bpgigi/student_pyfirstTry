@@ -21,6 +21,13 @@ class Student:
             self.math=m
         if e is not None:
             self.english=e
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "chinese": self.chinese,
+            "math": self.math,
+            "english": self.english
+        }
 class EduManagement:
     def __init__(self):
         self.stu_list = [] #学生列表，里面存学生类
@@ -173,7 +180,23 @@ class EduManagement:
         temperature = weather_data["current"]["temperature_2m"]
         # print(weather_data["temperature_2m"])
         print(f"{city_name}当前温度：{temperature}°C")
+    def upload_student(self,student):
+        url = "https://jsonplaceholder.typicode.com/posts"
+        try:
+            response = requests.post(url, json=student,timeout=5)
+            response.raise_for_status()
+            print(requests.status_codes)
+            data = response.json()
+            print("添加成功")
+        except requests.exceptions.ReadTimeout as e:
+            print("超时",e)
+            return
+        except requests.exceptions.RequestException as e:
+            print("网络错误",e)
+            return
 
-# if __name__ == "__main__":
-    # edu =EduManagement()
 
+ if __name__ == "__main__":
+    edu =EduManagement()
+    stu = Student("dxy",23,34,56)
+    edu.upload_student(stu)
