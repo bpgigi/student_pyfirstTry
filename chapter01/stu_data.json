@@ -1,0 +1,26 @@
+[
+    {
+        "name": "lll",
+        "chinese": 10,
+        "math": 1,
+        "english": 1
+    },
+    {
+        "name": "lza",
+        "chinese": 100,
+        "math": 99,
+        "english": 99
+    },
+    {
+        "name": "lll",
+        "chinese": 22,
+        "math": 33,
+        "english": 44
+    },
+    {
+        "name": "dxy",
+        "chinese": 90,
+        "math": 95,
+        "english": 89
+    }
+]
